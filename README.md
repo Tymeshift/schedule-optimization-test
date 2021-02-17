@@ -12,7 +12,7 @@ You have the following parameters:
    Basically the same, but for days off.
 4. Pre-defined days off (i.e. Tuesday and Friday are days off for this agent)
 
-You can see an example of those parameters defined in `helpers` folder.
+You can see an example of those parameters defined in `helpers` folder.  
 End result should be something like `[[5,3],[3,3],[5,2],[5,2]]`, meaning - agent works 5 days and has 3 days off, works 3 days and has 3 days off, etc.
 (Note that we do not use this output in the test case, but you can convert the solution to this format using BlocksToSolution helper function, it can help you visualise and debug the problem)
 
