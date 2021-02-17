@@ -23,7 +23,7 @@ Lastly - we want to make sure that the algorithm can find the solution as fast a
 
 ## Task
 
-You have two ways you can accomplish this task:
+There are two ways you can accomplish this task:
 
 1. Use the code from this repository
    1. Implement FindNeighborhood method(it's currently a stub)
