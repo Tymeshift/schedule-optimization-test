@@ -1,4 +1,8 @@
-package main
+package helpers
+
+import (
+	"github.com/Tymeshift/data-science-test/schedule"
+)
 
 // ProblemParams is a struct with all relevant params for the problem
 type ProblemParams struct {
@@ -10,7 +14,8 @@ type ProblemParams struct {
 	DaysOff    []int
 }
 
-var paramSets = []ProblemParams{{
+
+var ParamSets = []ProblemParams{{
 	NumDays:    28,
 	MaxWorking: 5,
 	MinWorking: 2,
@@ -37,7 +42,14 @@ var paramSets = []ProblemParams{{
 	MinWorking: 1,
 	MaxOff:     4,
 	MinOff:     2,
-	DaysOff:    []int{1, 4, 5, 6},
+	DaysOff:    []int{},
+}, {
+	NumDays:    7,
+	MaxWorking: 5,
+	MinWorking: 2,
+	MaxOff:     3,
+	MinOff:     1,
+	DaysOff:    []int{5, 6},
 }}
 
 func isInSlice(a int, b []int) bool {
@@ -49,19 +61,22 @@ func isInSlice(a int, b []int) bool {
 	return false
 }
 
-func getSearchParams(params ProblemParams) (Evaluate, FindNeighborhood, BlocksData) {
+
+func GetSearchParams(params ProblemParams) (schedule.Evaluate, schedule.FindNeighborhood, schedule.BlocksData) {
 	// template for mandatory pre-defined day-offs
 	var workingDays []int
 	for i := 0; i < params.NumDays; i++ {
 		if i != 0 && isInSlice(i%7, params.DaysOff) {
+			// pre-defined day-off
 			workingDays = append(workingDays, 0)
 		} else {
+			// each day have a different value associated with it, depending on the demand.
 			workingDays = append(workingDays, 1)
 		}
 	}
 
-	blocks := CreateBlocks(params.MinOff, params.MaxOff, params.MinWorking, params.MaxWorking)
-	evaluate := EvaluateFactory(params.NumDays, workingDays, blocks.Weights, blocks.Blocks, params.MinOff, params.MaxOff, params.MinWorking, params.MaxWorking)
-	findNeighborhood := FindNeighborhoodFactory(len(blocks.Weights))
+	blocks := schedule.CreateBlocks(params.MinOff, params.MaxOff, params.MinWorking, params.MaxWorking)
+	evaluate := schedule.EvaluateFactory(params.NumDays, workingDays, blocks.Weights, blocks.Blocks, params.MinOff, params.MaxOff, params.MinWorking, params.MaxWorking)
+	findNeighborhood := schedule.FindNeighborhoodFactory(len(blocks.Weights))
 	return evaluate, findNeighborhood, blocks
 }

@@ -1,30 +1,32 @@
-package main
+package search
+
+import (
+	"github.com/Tymeshift/data-science-test/schedule"
+)
 
 // TabuSearch - performs the search using the tabu search technique
-func TabuSearch(evaluate Evaluate, findNeighborhood FindNeighborhood, initialSolution []int, maxIter, limitNotImproved, tabuSize int) Solution {
+func TabuSearch(evaluate schedule.Evaluate, findNeighborhood schedule.FindNeighborhood, initialSolution []int, maxIter, tabuSize, limitNotImproved int) schedule.Solution {
 	count := 0
 	bestCost := evaluate(initialSolution)
-	solution := Solution{
+	solution := schedule.Solution{
 		Value: initialSolution,
 		Score: bestCost,
 	}
 	bestSolution := solution
-	var tabuList [][]int
+	tabuList := make([][]int, tabuSize)
 
 	notImprovedCounter := 0
 
 	for count <= maxIter {
 		// get all of the neighbors
 		neighbors := findNeighborhood(solution.Value)
-		filteredNeighbors := FilterSliceOfSlices(neighbors, tabuList)
+		neighbors = schedule.FilterSliceOfSlices(neighbors, tabuList)
 
-		if len(filteredNeighbors) > 0 {
-			solution = FindBestSolution(filteredNeighbors, evaluate)
-			// get the cost between the two solutions
-			cost := bestSolution.Score.Total - solution.Score.Total
+		if len(neighbors) > 0 {
+			solution = schedule.FindBestSolution(neighbors, evaluate)
 			// if the new solution is better,
 			// update the current solution with the new solution
-			if cost >= 0 && solution.Score.Penalty <= bestSolution.Score.Penalty {
+			if solution.Score.Penalty < bestSolution.Score.Penalty || (solution.Score.Penalty == bestSolution.Score.Penalty && solution.Score.Total < bestSolution.Score.Total) {
 				notImprovedCounter = -1
 				bestSolution = solution
 			}
@@ -43,7 +45,6 @@ func TabuSearch(evaluate Evaluate, findNeighborhood FindNeighborhood, initialSol
 			}
 
 		}
-
 		count++
 	}
 

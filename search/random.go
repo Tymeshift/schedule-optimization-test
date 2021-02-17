@@ -1,14 +1,16 @@
-package main
+package search
 
 import (
+	"github.com/Tymeshift/data-science-test/helpers"
+	"github.com/Tymeshift/data-science-test/schedule"
 	"math/rand"
 )
 
 // Random implements Random Walk
-func Random(evaluate Evaluate, initialSolution []int, params ProblemParams, blocks BlocksData, maxIter, limitNotImproved int, r *rand.Rand) Solution {
+func Random(evaluate schedule.Evaluate, initialSolution []int, params helpers.ProblemParams, blocks schedule.BlocksData, maxIter, limitNotImproved int, r *rand.Rand) schedule.Solution {
 	count := 0
 	bestCost := evaluate(initialSolution)
-	solution := Solution{
+	solution := schedule.Solution{
 		Value: initialSolution,
 		Score: bestCost,
 	}
@@ -18,9 +20,9 @@ func Random(evaluate Evaluate, initialSolution []int, params ProblemParams, bloc
 
 	for count <= maxIter {
 
-		nextSolutionValue := GenRandomSolution(params.NumDays, blocks.Weights, r)
+		nextSolutionValue := schedule.GenRandomSolution(params.NumDays, blocks.Weights, r)
 		nextSolutionScore := evaluate(nextSolutionValue)
-		solution := Solution{
+		solution := schedule.Solution{
 			Value: nextSolutionValue,
 			Score: nextSolutionScore,
 		}
@@ -36,7 +38,6 @@ func Random(evaluate Evaluate, initialSolution []int, params ProblemParams, bloc
 		if bestSolution.Score.Penalty == 0 && notImprovedCounter >= limitNotImproved {
 			return bestSolution
 		}
-
 		count++
 	}
 	return bestSolution

@@ -1,4 +1,4 @@
-package main
+package schedule
 
 // EvaluateFactory creates an Evaluate function to be used in a search to evaluate solutions
 func EvaluateFactory(maxWeight int, days []int, weights []int, blocks [][]int, minOff int, maxOff int, minWorking int, maxWorking int) Evaluate {
@@ -21,18 +21,18 @@ func EvaluateFactory(maxWeight int, days []int, weights []int, blocks [][]int, m
 func EvalWeight(maxWeight int, weights []int, solution []int) int {
 	totalWeight := GetTotalWeight(weights, solution)
 	if totalWeight > maxWeight {
-		return (totalWeight - maxWeight) * 4 // penalty for going over the limit
+		return (totalWeight - maxWeight) * 8 // penalty for going over the limit
 	}
 	if totalWeight < maxWeight {
-		return (maxWeight - totalWeight) * 2 // penlaty for underperforming
+		return (maxWeight - totalWeight) * 4 // penalty for underperforming
 	}
 	return 0
 }
 
-// GetDaysStats gets different stats about the solution, i.e. consecutives, total working and penalty
+// GetDaysStats gets different stats about the solution, i.e. consecutive, total working and penalty
 func GetDaysStats(days []int, blocks [][]int, solution []int) ([]int, []int, int, int) {
-	var consecutiveWorkings []int
-	var consecutiveOffs []int
+	consecutiveWorkings := make([]int, 0, len(days))
+	consecutiveOffs := make([]int, 0, len(days))
 	totalWorking := 0
 	curDay := 0
 	wrongDayOffPenalty := 0

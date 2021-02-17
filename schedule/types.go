@@ -1,4 +1,4 @@
-package main
+package schedule
 
 // Solution - type that containes solution data and score
 type Solution struct {
@@ -23,3 +23,4 @@ type Evaluate func([]int) SolutionScore
 
 // FindNeighborhood - function that finds neighbors for optimisation problem
 type FindNeighborhood func([]int) [][]int
+
