@@ -31,7 +31,10 @@ There are two ways you can accomplish this task:
    1. Implement FindNeighborhood method(it's currently a stub)
    2. Make sure that tabu_test are passing (the only thing they check is that penalty is zero)
    3. Bonus: increase the total score (without changing the limitNotImproved and number of iterations)
-   4. Bonus2: improve the algorithm performance(we have a benchmark ready in tabu_test)
+   4. Bonus2: improve the algorithm performance(we have a benchmark ready in tabu_test)  
+   You can improve anything you want, i.e. - base tabu search part, neighboor generation, how we choose the best solution, initial solution, even the evaluation process.   
+   The only condition is that it should still adhere to the problem parameters. 
+   
 2. If you are not comfortable with the golang or just want to use a completely different approach - feel free to do so. It is okay to just take the constraints from the problem definition and solve the problem in any language you want, using any method you want as long as it respects the original rules.
 
 (Mind you - in a simplified test case it is possible to just brute force a problem, but the actual problem has more constraints and more things to optimise for, so it would be better to have a more sophisticated solution.)
