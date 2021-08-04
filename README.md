@@ -1,5 +1,5 @@
-# Tymeshift - Data science code test
-Welcome to Tymeshift's data science code test 🧪
+# Tymeshift - Software engineer schedule optimization test
+Welcome to Tymeshift's schedule optimization code test 🧪
 
 ## Problem description:
 
